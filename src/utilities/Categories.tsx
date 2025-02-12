@@ -110,7 +110,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ categories }) => {
 	const [input, setInput] = React.useState<string>("");
 
 	return (
-		<div className="categories">
+		<div className="category-validation">
 			<IonItem>
 				<IonInput
 					placeholder="Enter a subcategory"
@@ -123,7 +123,7 @@ const DataValidation: React.FC<DataValidationProps> = ({ categories }) => {
 				/>
 			</IonItem>
 			<IonButton
-				className="ion-padding"
+				className="validate ion-padding"
 				onClick={() => setValidCategories(getInfo(categories, input))}
 			>
 				Get Info
