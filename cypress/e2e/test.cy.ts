@@ -1,9 +1,11 @@
-/// <reference types="cypress">
+/// <reference types="cypress" />
 
-describe("My First Test", () => {
-	it("Visits the app root url", () => {
-		cy.visit('https://example.cypress.io')
-    	cy.contains('type').click()
-    	cy.url().should('include', '/commands/actions')
+describe("Database connectiong test", () => {
+	it("Test the 'SEND DATA' button", () => {
+		cy.visit('/debug')
+    	cy.get(".database-test").click();
+		cy.on('window:alert', (str) => {
+			expect(str).to.contain('Document written with ID:')
+		});
 	});
 });
