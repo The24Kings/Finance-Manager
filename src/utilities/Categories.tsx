@@ -170,7 +170,7 @@ const EntryCategories: React.FC<EntryCategoriesProps> = ({ categories }) => {
 			
 				{/* Create a Set with the Types to remove mulitples and display */}
 				{[...new Set(categories.map((category) => category.getType()))].map((type) => (
-					<IonAccordion value={type} key={type}>
+					<IonAccordion className="type" value={type} key={type}>
 						<IonItem slot="header" color="primary">
 							<IonLabel>{type}</IonLabel>
 						</IonItem>
@@ -182,6 +182,7 @@ const EntryCategories: React.FC<EntryCategoriesProps> = ({ categories }) => {
 									.filter((cat) => cat.getType() === type)
 									.map((category) => (
 										<IonAccordion
+											className="category"
 											value={category.getCategory()}
 											key={category.getCategory()}
 										>
@@ -195,7 +196,7 @@ const EntryCategories: React.FC<EntryCategoriesProps> = ({ categories }) => {
 													slot="content"
 													key={`${category.getType()}-${category.getCategory()}-${subCategory.Name}`}
 												>
-													<IonItem key={subCategory.Name}>
+													<IonItem className="subCategory" key={subCategory.Name}>
 														<IonButton
 															fill="clear"
 															shape="round"

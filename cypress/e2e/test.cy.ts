@@ -1,35 +1,59 @@
 /// <reference types="cypress" />
 
-describe("Database connectiong test", () => {
+describe("Database connection test", () => {
 	it("Test the 'SEND DATA' button", () => {
-		cy.visit('/debug')
-    	cy.get(".database-test").click();
-		cy.on('window:alert', (str) => {
-			expect(str).to.contain('Document written with ID:')
+		cy.visit("/debug");
+		cy.get(".database-test").click();
+		cy.on("window:alert", (str) => {
+			expect(str).to.contain("Document written with ID:");
 		});
 	});
 });
 
 describe("Category data validation", () => {
-	const data = "Other";
+	const valid = "Other";
+	const invalid = "Invalid";
 
-	it("Test the data validation", () => {
-		cy.visit('/debug')
-		cy.get(".category-validation").get("ion-input").type(data);
+	it("Correct subcategory given", () => {
+		cy.visit("/debug");
+		cy.get(".category-validation").get("ion-input").type(valid);
 		cy.get(".category-validation").get(".validate").click();
-		cy.get(".category-validation").get("p").contains(data);
+		cy.get(".category-validation").get("p").contains(valid);
+	});
+
+	it("Invalid subCategory rejected", () => {
+		cy.visit("/debug");
+		cy.get(".category-validation").get("ion-input").type(invalid);
+		cy.get(".category-validation").get(".validate").click();
+		cy.on("window:alert", (str) => {
+			expect(str).to.contain(`Subcategory "${invalid}" not found.`);
+		});
 	});
 });
 
-describe("Incorrect category alert", () => {
-	const data = "Invalid";
+describe("Check the categories", () => {
+	it("Does 'Income' Exist", () => {
+		cy.visit("/debug");
+		cy.get(".categories").get("ion-accordion").contains("Income");
+	});
 
-	it("Test the data validation", () => {
-		cy.visit('/debug')
-		cy.get(".category-validation").get("ion-input").type(data);
-		cy.get(".category-validation").get(".validate").click();
-		cy.on('window:alert', (str) => {
-			expect(str).to.contain(`Subcategory "${data}" not found.`);
-		});
+	it("Does 'Expenses' exist", () => {
+		cy.visit("/debug");
+		cy.get(".categories").get("ion-accordion").contains("Expenses");
+	});
+
+	it("Test the JSON parsing", () => {
+		const type = "Expenses";
+		const category = "Transportation";
+		const data = "Insurance";
+
+		cy.visit("/debug");
+		cy.get(".categories").contains(type).click();
+		cy.get(".categories").get(".category").contains(category).click();
+		cy.get(".categories")
+			.get(".category")
+			.get(".subCategory")
+			.contains(data)
+			.should("be.visible");
 	});
 });
