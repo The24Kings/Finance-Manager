@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react";
 import App from "./App";
-
-import { parseJSON, getInfo } from "./utilities/Categories";
+import { getInfo, parseJSON } from "./utilities/Categories";
 import { testFirebaseConnection } from "./utilities/Firebase";
 
 const object = {
@@ -46,7 +45,9 @@ test("checks if subcategory exists", () => {
 test("checks if subcategory does not exist", () => {
 	// Mute the alert (since it is used in getInfo)
 	const jsdomAlert = window.alert;
-	window.alert = () => { /* no-op */ };
+	window.alert = () => {
+		/* no-op */
+	};
 
 	const categories = parseJSON(object);
 
@@ -55,9 +56,11 @@ test("checks if subcategory does not exist", () => {
 });
 
 test("connects to Firebase", async () => {
-	// Mute the alert (since it is used in getInfo)
+	// Mute the alert (since it is used in testFirebaseConnection)
 	const jsdomAlert = window.alert;
-	window.alert = () => { /* no-op */ };
+	window.alert = () => {
+		/* no-op */
+	};
 
 	// Call the function
 	const result = await testFirebaseConnection();
